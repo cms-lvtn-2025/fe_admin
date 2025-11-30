@@ -11,6 +11,7 @@ import ReactFlow, {
   reconnectEdge,
   useReactFlow,
   ReactFlowProvider,
+  Position,
   type Node,
   type Edge,
   type Connection,
@@ -61,8 +62,8 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'LR') => 
 
   nodes.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? 'left' : 'top';
-    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
+    node.targetPosition = isHorizontal ? Position.Left : Position.Top;
+    node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
 
     // We are shifting the dagre node position (anchor=center center) to the top left
     // so it matches the React Flow node anchor point (top left).
@@ -93,14 +94,6 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
   const [paramsText, setParamsText] = useState<string>('');
   const [optionsText, setOptionsText] = useState<string>('');
   const { screenToFlowPosition } = useReactFlow();
-
-  const handleNavigateBack = () => {
-    if (onCancel) {
-      onCancel();
-    } else {
-      navigate('/workflows');
-    }
-  };
 
   const handleSaveSuccess = () => {
     if (onSave) {
@@ -135,6 +128,11 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
     try {
       const response = await workflowsApi.getById(workflowId);
       const workflow = response.data;
+
+      if (!workflow) {
+        console.error('Workflow not found');
+        return;
+      }
 
       setWorkflowName(workflow.name);
 
@@ -208,7 +206,7 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
     });
 
     // Children nodes
-    const addChildren = (children: any[], parentId: string, startX: number, startY: number) => {
+    const addChildren = (children: any[], _parentId: string, startX: number, startY: number) => {
       children?.forEach((child, index) => {
         const currentId = `node-${nodeId++}`;
         const y = startY + (index * 150);
@@ -493,7 +491,7 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
     return children;
   };
 
-  const handleNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+  const handleNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
     setSelectedNode(node);
     setEditedNodeData({...node.data});
 
