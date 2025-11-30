@@ -610,7 +610,6 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
             defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
             minZoom={0.1}
             maxZoom={2}
-            edgesReconnectable={true}
             fitView
             fitViewOptions={{
               padding: 0.2,

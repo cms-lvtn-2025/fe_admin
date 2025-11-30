@@ -76,7 +76,7 @@ const Workflows: React.FC = () => {
 
     try {
       await cronjobsApi.create({
-        cronExpression: cronSchedule,
+        schedule: cronSchedule,
         WL_id: selectedWorkflow._id,
         enabled: true,
       });
