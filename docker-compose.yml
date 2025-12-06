@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  fe-server:
-    image: thaily/fe-server:latest
-    container_name: fe-server
+  fe-server-2:
+    image: thaily/fe-server-2:latest
+    container_name: fe-server-2
     restart: unless-stopped
     ports:
       - "8080:80"
