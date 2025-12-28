@@ -694,7 +694,7 @@ const WorkflowEditorInner: React.FC<WorkflowEditorProps> = ({ workflowId: propWo
                   } else if (serviceName === 'MONGODB_WORKFLOW') {
                     methods = ['findById', 'find', 'findOne', 'create', 'update', 'delete'];
                   } else if (serviceName?.startsWith('MINIO')) {
-                    methods = ['uploadBuffer', 'getFile', 'deleteFile', 'listFiles', 'generateTemplate1PDF'];
+                    methods = ['uploadBuffer', 'getFile', 'deleteFile', 'listFiles', 'generateTemplate1PDF', 'readExcelAsObjects'];
                   }
 
                   if (methods.length > 0) {

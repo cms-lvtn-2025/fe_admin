@@ -90,8 +90,9 @@ const Workflows: React.FC = () => {
   };
 
   const handleToggleCronJob = async (cronJob: CronJob) => {
+    console.log('Toggling CronJob:', cronJob);
     if (!confirm(`Are you sure you want to ${cronJob.enabled ? 'disable' : 'enable'} this CronJob?`)) return;
-
+    console.log('User confirmed toggle action');
     try {
       await cronjobsApi.toggle(cronJob._id);
       alert(`CronJob ${cronJob.enabled ? 'disabled' : 'enabled'} successfully!`);
